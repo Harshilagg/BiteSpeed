@@ -4,11 +4,24 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+datasource db {
+ provider = "postgresql"
 }
 
-datasource db {
-  provider = "postgresql"
+generator client {
+ provider = "prisma-client-js"
+}
+
+model Contact {
+ id             Int      @id @default(autoincrement())
+ email          String?
+ phoneNumber    String?
+ linkedId       Int?
+ linkPrecedence String
+ createdAt      DateTime @default(now())
+ updatedAt      DateTime @updatedAt
+ deletedAt      DateTime?
+
+ @@index([email])
+ @@index([phoneNumber])
 }
